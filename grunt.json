@@ -1,4 +1,5 @@
 {
   "css": "styles",
-  "sass": "styles/scss"
+  "sass": "styles/scss",
+  "bower": "js/lib"
 }

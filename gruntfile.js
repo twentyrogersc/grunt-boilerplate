@@ -32,6 +32,15 @@ module.exports = function(grunt) {
       }
     },
 
+    bower: {
+      install: {
+        options: {
+          cleanup: true,
+          targetDir: config.bower
+        }
+      }
+    },
+
     watch: {
       sass: {
         files: [config.sass+'*.scss'],
@@ -41,10 +50,10 @@ module.exports = function(grunt) {
 
   })
 
+  grunt.loadNpmTasks('grunt-bower-task')
   grunt.loadNpmTasks('grunt-contrib-sass')
   grunt.loadNpmTasks('grunt-contrib-watch')
 
-  grunt.registerTask('default', ['watch'])
-  grunt.registerTask('production', ['sass:production'])
-
+  grunt.registerTask('default', ['bower:install', 'watch'])
+  grunt.registerTask('production', ['bower:install', 'sass:production'])
 }
