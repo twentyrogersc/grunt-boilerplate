@@ -14,7 +14,7 @@ module.exports = function(grunt) {
         options: { style: 'compressed' },
         expand: true,
         cwd: config.sass,
-        src: ['*.scss'],
+        src: '*.scss',
         dest: config.css,
         ext: '.css'
       },
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
         },
         expand: true,
         cwd: config.sass,
-        src: ['*.scss'],
+        src: '*.scss',
         dest: config.css,
         ext: '.css'
       }
@@ -41,6 +41,27 @@ module.exports = function(grunt) {
       }
     },
 
+    uglify: {
+      bower: {
+        files: [{
+          expand: true,
+          cwd: config.bower,
+          src: '**/*.js',
+          rename: function(dest, src) {
+            src = path.basename(src)
+            return path.join(config.bower, src)
+          }
+        }]
+      }
+    },
+
+    clean: {
+      bower: {
+        src: config.bower+'*',
+        filter: 'isDirectory'
+      }
+    },
+
     watch: {
       sass: {
         files: [config.sass+'*.scss'],
@@ -51,9 +72,12 @@ module.exports = function(grunt) {
   })
 
   grunt.loadNpmTasks('grunt-bower-task')
+  grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-contrib-sass')
+  grunt.loadNpmTasks('grunt-contrib-uglify')
   grunt.loadNpmTasks('grunt-contrib-watch')
 
-  grunt.registerTask('default', ['bower:install', 'watch'])
-  grunt.registerTask('production', ['bower:install', 'sass:production'])
+  grunt.registerTask('default', ['bower:update', 'watch'])
+  grunt.registerTask('bower:update', ['bower:install', 'uglify:bower', 'clean:bower'])
+  grunt.registerTask('production', ['bower:update', 'sass:production'])
 }
