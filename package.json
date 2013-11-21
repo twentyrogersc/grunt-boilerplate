@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "description": "",
 
-  "dependencies": {},
-  "devDependencies": {
-    "grunt": "0.4.1",
-    "grunt-bower-task": "0.3.4",
-    "grunt-mkdir": "0.1.1",
-    "grunt-contrib-clean": "0.5.0",
-    "grunt-contrib-sass": "0.5.0",
-    "grunt-contrib-uglify": "0.2.7",
-    "grunt-contrib-watch": "0.5.3",
-    "node-bourbon": "1.0.0"
+  "dependencies": {
+    "async": "0.2.9",
+    "colors": "0.6.2",
+    "commander": "2.0.0",
+    "mkdirp": "0.3.5",
+    "mu2": "0.5.20"
+  },
+
+  "main": "./boilerplate.js",
+  "bin": {
+    "grunt-boilerplate": "./boilerplate.js"
   }
 }

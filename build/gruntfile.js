@@ -1,15 +1,7 @@
 var bourbon = require('node-bourbon')
-  , config = {}
   , path = require('path')
 
 module.exports = function(grunt) {
-
-  config.assets = 'app'
-  config.css = config.assets+'/css'
-  config.sass = config.assets+'/scss'
-  config.js = config.assets+'/js'
-  config.bower = config.js+'/lib'
-
 
   grunt.initConfig({
 
@@ -17,9 +9,9 @@ module.exports = function(grunt) {
       init: {
         options: {
           create: [
-            config.css,
-            config.sass,
-            config.bower
+            '{{ paths.css }}',
+            '{{ paths.scss }}',
+            '{{ paths.bower }}'
           ]
         },
       },
@@ -32,9 +24,9 @@ module.exports = function(grunt) {
           style: 'compressed'
         },
         expand: true,
-        cwd: config.sass,
+        cwd: '{{ paths.scss }}',
         src: '*.scss',
-        dest: config.css,
+        dest: '{{ paths.css }}',
         ext: '.css'
       },
       dev: {
@@ -45,9 +37,9 @@ module.exports = function(grunt) {
           style: 'nested'
         },
         expand: true,
-        cwd: config.sass,
+        cwd: '{{ paths.scss }}',
         src: '*.scss',
-        dest: config.css,
+        dest: '{{ paths.css }}',
         ext: '.css'
       }
     },
@@ -56,7 +48,7 @@ module.exports = function(grunt) {
       install: {
         options: {
           cleanup: true,
-          targetDir: config.bower
+          targetDir: '{{ paths.bower }}'
         }
       }
     },
@@ -65,11 +57,11 @@ module.exports = function(grunt) {
       bower: {
         files: [{
           expand: true,
-          cwd: config.bower,
+          cwd: '{{ paths.bower }}',
           src: '**/*.js',
           rename: function(dest, src) {
             src = path.basename(src)
-            return path.join(config.bower, src)
+            return path.join('{{ paths.bower }}', src)
           }
         }]
       }
@@ -77,14 +69,14 @@ module.exports = function(grunt) {
 
     clean: {
       bower: {
-        src: config.bower+'/*',
+        src: '{{ paths.bower }}*',
         filter: 'isDirectory'
       }
     },
 
     watch: {
       sass: {
-        files: [config.sass+'/*.scss'],
+        files: ['{{ paths.scss }}*.scss'],
         tasks: ['sass:dev']
       },
       bower: {
