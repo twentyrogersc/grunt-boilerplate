@@ -1,4 +1,5 @@
-var config = {}
+var bourbon = require('node-bourbon')
+  , config = {}
   , path = require('path')
 
 module.exports = function(grunt) {
@@ -15,14 +16,21 @@ module.exports = function(grunt) {
     mkdir: {
       init: {
         options: {
-          create: [config.css, config.sass, config.bower]
+          create: [
+            config.css,
+            config.sass,
+            config.bower
+          ]
         },
       },
     },
 
     sass: {
       production: {
-        options: { style: 'compressed' },
+        options: {
+          loadPath: bourbon.includePaths,
+          style: 'compressed'
+        },
         expand: true,
         cwd: config.sass,
         src: '*.scss',
@@ -33,6 +41,7 @@ module.exports = function(grunt) {
         options: {
           debugInfo: true,
           lineNumbers: true,
+          loadPath: bourbon.includePaths,
           style: 'nested'
         },
         expand: true,
@@ -93,7 +102,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify')
   grunt.loadNpmTasks('grunt-contrib-watch')
 
-  grunt.registerTask('default', ['init', 'watch'])
+  grunt.registerTask('default', ['init', 'sass:dev', 'watch'])
   grunt.registerTask('init', ['mkdir:init', 'bower:update'])
   grunt.registerTask('bower:update', ['bower:install', 'uglify:bower', 'clean:bower'])
   grunt.registerTask('production', ['bower:update', 'sass:production'])
