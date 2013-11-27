@@ -1,7 +1,24 @@
 {
-  "name": "grunt-boilerplate",
+  "name": "grunt-setup",
   "version": "0.1.0",
-  "description": "",
+  "description": "Quickly start a sass & backbone project with grunt & bower.",
+
+  "bugs": "https://github.com/twentyrogersc/grunt-boilerplate/issues",
+  "homepage": "https://github.com/twentyrogersc/grunt-boilerplate",
+  "repository": "https://github.com/twentyrogersc/grunt-boilerplate.git",
+
+  "keywords": [
+    "backbone",
+    "boilerplate",
+    "bourbon",
+    "bower",
+    "css",
+    "grunt",
+    "js",
+    "requirejs",
+    "sass",
+    "watch"
+  ],
 
   "dependencies": {
     "async": "0.2.9",
@@ -11,6 +28,7 @@
     "mu2": "0.5.20"
   },
 
+  "preferGlobal": true,
   "main": "./boilerplate.js",
   "bin": {
     "grunt-boilerplate": "./boilerplate.js"
