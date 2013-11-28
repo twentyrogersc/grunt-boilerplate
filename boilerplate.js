@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 var args = require('./lib/args')
+  , assets = require('./lib/assets')
   , async = require('async')
   , colors = require('colors')
   , files = require('./lib/files')
@@ -27,6 +28,10 @@ args.parse(process.argv, function(err, config) {
     function(next) {
       console.info('Writing'.ok, 'package files')
       files.render(config, next)
+    },
+    function(next) {
+      console.info('Writing'.ok, 'asset files')
+      assets.copy(config.assets, next)
     },
     function(next) {
       console.info('Running'.ok, 'grunt')

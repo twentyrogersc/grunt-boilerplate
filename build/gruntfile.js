@@ -25,7 +25,7 @@ module.exports = function(grunt) {
         },
         expand: true,
         cwd: '{{ paths.scss }}',
-        src: '*.scss',
+        src: ['*.scss', '!_*'],
         dest: '{{ paths.css }}',
         ext: '.css'
       },
@@ -38,7 +38,7 @@ module.exports = function(grunt) {
         },
         expand: true,
         cwd: '{{ paths.scss }}',
-        src: '*.scss',
+        src: ['*.scss', '!_*'],
         dest: '{{ paths.css }}',
         ext: '.css'
       }
