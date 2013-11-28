@@ -1,6 +1,6 @@
 {
   "name": "grunt-setup",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Quickly start a sass & backbone project with grunt & bower.",
 
   "bugs": "https://github.com/twentyrogersc/grunt-boilerplate/issues",
