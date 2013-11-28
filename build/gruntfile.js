@@ -53,16 +53,14 @@ module.exports = function(grunt) {
       }
     },
 
-    uglify: {
+    copy: {
       bower: {
         files: [{
           expand: true,
-          cwd: '{{ paths.bower }}',
-          src: '**/*.js',
-          rename: function(dest, src) {
-            src = path.basename(src)
-            return path.join('{{ paths.bower }}', src)
-          }
+          flatten: true,
+          src: '{{ paths.bower }}**',
+          dest: '{{ paths.bower }}',
+          filter: 'isFile'
         }]
       }
     },
@@ -71,6 +69,17 @@ module.exports = function(grunt) {
       bower: {
         src: '{{ paths.bower }}*',
         filter: 'isDirectory'
+      }
+    },
+
+    requirejs: {
+      production: {
+        options: {
+          name: 'app',
+          baseUrl: '{{ paths.js }}',
+          mainConfigFile: '{{ paths.js }}app.js',
+          out: '{{ paths.js }}app.min.js'
+        }
       }
     },
 
@@ -90,12 +99,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-bower-task')
   grunt.loadNpmTasks('grunt-mkdir')
   grunt.loadNpmTasks('grunt-contrib-clean')
+  grunt.loadNpmTasks('grunt-contrib-copy')
+  grunt.loadNpmTasks('grunt-contrib-requirejs')
   grunt.loadNpmTasks('grunt-contrib-sass')
-  grunt.loadNpmTasks('grunt-contrib-uglify')
   grunt.loadNpmTasks('grunt-contrib-watch')
 
   grunt.registerTask('default', ['init', 'sass:dev', 'watch'])
-  grunt.registerTask('init', ['mkdir:init', 'bower:update'])
-  grunt.registerTask('bower:update', ['bower:install', 'uglify:bower', 'clean:bower'])
-  grunt.registerTask('production', ['bower:update', 'sass:production'])
+  grunt.registerTask('init', ['mkdir:init', 'bower:update', 'sass:dev'])
+  grunt.registerTask('bower:update', ['bower:install', 'copy:bower', 'clean:bower'])
+  grunt.registerTask('production', ['bower:update', 'requirejs:production', 'sass:production'])
 }
